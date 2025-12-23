@@ -1,0 +1,39 @@
+name: Automasi Preprocessing Email Spam
+
+on:
+  push:
+    paths:
+      - 'preprocessing/automate_Aditya Wahib Erlangga.py'
+      - 'emails_raw/emails.csv'
+  workflow_dispatch:
+
+jobs:
+  run-preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.7'
+
+      - name: Install Libraries
+        run: |
+          pip install pandas numpy scikit-learn
+
+      - name: Jalankan Script Otomatisasi
+        run: python "preprocessing/automate_Aditya Wahib Erlangga.py"
+
+      - name: Commit Hasil Preprocessing
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # REVISI DI SINI: Sesuaikan dengan nama file output baru
+          git add preprocessing/emails_preprocessing/emails_preprocessing.csv
+          
+          git commit -m "Auto: Update emails_preprocessing.csv" || echo "Tidak ada perubahan data"
+          git push
