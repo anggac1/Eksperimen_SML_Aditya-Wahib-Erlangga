@@ -1,5 +1,6 @@
 name: Automasi Preprocessing Email Spam
-
+permissions:
+  contents: write 
 on:
   push:
     paths:
